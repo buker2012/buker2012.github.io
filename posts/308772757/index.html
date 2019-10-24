@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.2">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Part.1正则表达式能在字符串中查找匹配特定模式的子字符串。在JavaScript中，可以通过斜线 &#x2F;&#x2F; 来创建，也可以通过new RegExp()来创建，然后就能使用match、test、replace等方法。">
+<meta name="keywords" content="正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="彻底搞懂 JS 中正则表达式">
+<meta property="og:url" content="https:&#x2F;&#x2F;lizer.tech&#x2F;posts&#x2F;308772757&#x2F;index.html">
+<meta property="og:site_name" content="Zilor 的码窝">
+<meta property="og:description" content="Part.1正则表达式能在字符串中查找匹配特定模式的子字符串。在JavaScript中，可以通过斜线 &#x2F;&#x2F; 来创建，也可以通过new RegExp()来创建，然后就能使用match、test、replace等方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-3-23-20191011190323.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-8-20191011190607.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-24-20191011190623.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-36-20191011190635.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-49-20191011190648.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-59-20191011190658.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-7-9-20191011190709.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-7-23-20191011190722.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-7-33-20191011190733.png">
+<meta property="og:updated_time" content="2019-10-24T11:08:15.529Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-3-23-20191011190323.png">
+
+<link rel="canonical" href="https://lizer.tech/posts/308772757/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>彻底搞懂 JS 中正则表达式 | Zilor 的码窝</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zilor 的码窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">语言无止境，框架海无涯</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lizer.tech/posts/308772757/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Zil Herig">
+      <meta itemprop="description" content="犹豫，就会败北">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zilor 的码窝">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          彻底搞懂 JS 中正则表达式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-11 17:36:45" itemprop="dateCreated datePublished" datetime="2019-10-11T17:36:45+08:00">2019-10-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS/" itemprop="url" rel="index">
+                    <span itemprop="name">JS</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Part-1"><a href="#Part-1" class="headerlink" title="Part.1"></a>Part.1</h2><p>正则表达式能在字符串中查找匹配特定模式的子字符串。</p><p>在JavaScript中，可以通过斜线 // 来创建，也可以通过<code>new RegExp()</code>来创建，然后就能使用<code>match</code>、<code>test</code>、<code>replace</code>等方法。</p><a id="more"></a>
+
+<p>你可以事先定义正则表达式，也可以在调用方法时随时定义。</p>
+<img src="https://raw.githubusercontent.com/buker2012/figurebed/master/%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-3-23-20191011190323.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-3-23-20191011190323.png">
+
+<h2 id="Part-2"><a href="#Part-2" class="headerlink" title="Part.2"></a>Part.2</h2><p>每次匹配一个字符，将多个字符放到方括号 [] 中可以匹配多个匹配的字符。</p>
+<p>用横线 - 匹配字符范围。</p>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-8-20191011190607.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-6-8-20191011190607.png"></p>
+<h2 id="Part-3"><a href="#Part-3" class="headerlink" title="Part.3"></a>Part.3</h2><p>在正则表达式末尾添加额外的标记来修改匹配器的行为。</p>
+<p>JavaScript 支持如下标记：</p>
+<ul>
+<li>i = 不区分大小写</li>
+<li>m = 多行匹配</li>
+<li>g = 全局匹配（查找所有匹配，而不是仅查找一个）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-24-20191011190623.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-6-24-20191011190623.png"></p>
+<h2 id="Part-4"><a href="#Part-4" class="headerlink" title="Part.4"></a>Part.4</h2><p>在模式开头使用箭头 <code>^</code> 表示“字符串开头”。</p>
+<p>在模式末尾使用美元符号 <code>$</code> 表示“字符串结尾”。</p>
+<p>将多个模式放在一起以匹配更长的字符串。</p>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-36-20191011190635.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-6-36-20191011190635.png"></p>
+<h2 id="Part-5"><a href="#Part-5" class="headerlink" title="Part.5"></a>Part.5</h2><p>使用通配符和特殊的转义字符来匹配字符类。</p>
+<p>. = 除了换行之外的任何字符。</p>
+<ul>
+<li>\d = 数字</li>
+<li>\D = 非数字</li>
+<li>\s = 空白</li>
+<li>\S = 非空白</li>
+<li>\n = 新行</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-49-20191011190648.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-6-49-20191011190648.png"></p>
+<h2 id="Part-6"><a href="#Part-6" class="headerlink" title="Part.6"></a>Part.6</h2><p>用数量修饰符来匹配特定数量的字符。</p>
+<ul>
+<li>*= 零个或多个</li>
+<li>+= 一个或多个</li>
+<li>？= 零个或一个</li>
+<li>{3} = 正好3个</li>
+<li>{2,4} = 2, 3, 或4个</li>
+<li>{2,} = 2或多个</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-6-59-20191011190658.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-6-59-20191011190658.png"></p>
+<h2 id="Part-7"><a href="#Part-7" class="headerlink" title="Part.7"></a>Part.7</h2><p>使用括号 () 来分组。</p>
+<p><code>match</code>会返回完整的匹配，外加每个分组，除非你使用了g标记。</p>
+<p>在括号 () 内使用管道符号 | 来表示分组的匹配内容。</p>
+<ul>
+<li>| = 或者</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-7-9-20191011190709.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-7-9-20191011190709.png"></p>
+<h2 id="Part-8"><a href="#Part-8" class="headerlink" title="Part.8"></a>Part.8</h2><p>要匹配特殊字符，需要用反斜杠 <code>\</code> 将其转义。</p>
+<p>JS正则表达式中的特殊字符包括：<code>^ $ \ . * + ? ( ) [ ] { } |</code></p>
+<p>所以，要想匹配星号，需要使用：</p>
+<ul>
+<li><code>\*</code></li>
+<li>而不能仅使用 <code>*</code></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-7-23-20191011190722.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-7-23-20191011190722.png"></p>
+<h2 id="Part-9"><a href="#Part-9" class="headerlink" title="Part.9"></a>Part.9</h2><p>要想匹配除了特定字符之外的任意字符，可以在方括号内使用^。</p>
+<p>这意味着 ^ 有两种含义，可能会造成混淆。</p>
+<p>当它出现在正则表达式开头时，它表示“字符串开头”；出现在方括号内时，表示“不是这些字符串”。</p>
+<p><img src="https://raw.githubusercontent.com/buker2012/figurebed/master/
+%5B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%20JS%20%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%5D-2019-10-11-19-7-33-20191011190733.png" alt="[彻底搞懂 JS 中的正则表达式]-2019-10-11-19-7-33-20191011190733.png"></p>
+<h2 id="Part-10"><a href="#Part-10" class="headerlink" title="Part.10"></a>Part.10</h2><p>正则表示可以用来查找并匹配各种东西，比如URL和文件名。</p>
+<p>但是！对于非常复杂的任务，使用正则表达式时一定要小心，比如分析电子邮件（你很容易就会弄得一团糟），或者分析HTML（HTML不是正规的语言，所以没办法完全使用正则表达式来解析）。</p>
+<p>当然，正则表达式还有更多内容，如懒惰 vs 贪婪，前向，捕获等。</p>
+<p>但是，对于绝大多数Web开发者来说，掌握这些最基本的组成部分就够了。</p>
+<hr>
+<blockquote>
+<p>原文：<a href="https://dev.to/chrisachard/intro-to-regex-for-web-developers-2fj4" target="_blank" rel="noopener">https://dev.to/chrisachard/intro-to-regex-for-web-developers-2fj4</a><br>作者：Chris Achard，程序员，日常使用JS, React, Rails和Node，在egghead.io上讲课。<br>本文为 CSDN 翻译，转载请注明来源出处。  </p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+    </div>
+
+    
+    
+    
+      
+        <div class="reward-container">
+  <div>如果我的文章对你有所帮助，可以请我喝杯茶哦！</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/wechatpay.jpg" alt="Zil Herig 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/alipay.jpg" alt="Zil Herig 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Chris Achard
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://dev.to/chrisachard/intro-to-regex-for-web-developers-2fj4" title="彻底搞懂 JS 中正则表达式" rel="noopener" target="_blank">https://dev.to/chrisachard/intro-to-regex-for-web-developers-2fj4</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 正则表达式</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/posts/771724912/" rel="next" title="ASP.NET Core 3.0 项目实战之订单采集小程序 第四章 接口设计">
+                  <i class="fa fa-chevron-left"></i> ASP.NET Core 3.0 项目实战之订单采集小程序 第四章 接口设计
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-1"><span class="nav-number">1.</span> <span class="nav-text">Part.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">2.</span> <span class="nav-text">Part.2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3"><span class="nav-number">3.</span> <span class="nav-text">Part.3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-4"><span class="nav-number">4.</span> <span class="nav-text">Part.4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-5"><span class="nav-number">5.</span> <span class="nav-text">Part.5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-6"><span class="nav-number">6.</span> <span class="nav-text">Part.6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-7"><span class="nav-number">7.</span> <span class="nav-text">Part.7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-8"><span class="nav-number">8.</span> <span class="nav-text">Part.8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-9"><span class="nav-number">9.</span> <span class="nav-text">Part.9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-10"><span class="nav-number">10.</span> <span class="nav-text">Part.10</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Zil Herig"
+    src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Zil Herig</p>
+  <div class="site-description" itemprop="description">犹豫，就会败北</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/buker2012" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;buker2012" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:buker2012@qq.com" title="E-Mail &amp;rarr; mailto:buker2012@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-space-shuttle"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zil Herig</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">12k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15 分钟</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
+<script src="/js/schemes/pisces.js?v=7.4.2"></script>
+<script src="/js/next-boot.js?v=7.4.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'd0dd8179a305f5234b4f',
+      clientSecret: '07ded8db0be1796e5aa5b6d863f8dd5a6e239aba',
+      repo: 'buker2012.github.io',
+      owner: 'buker2012',
+      admin: ['buker2012'],
+      id: '809d70401d1f2984bc18046e39532917',
+        language: 'zh-CN',
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+</body>
+</html>

@@ -52,17 +52,18 @@
   };
 </script>
 
-  <meta name="description" content="犹豫，就会败北">
+  <meta name="description" content="document.querySelectorAll(&amp;apos;.github-emoji&amp;apos;)           .forEach(el =&amp;gt; {             if (!el.dataset.src) { return; }             const img = document.createElement(&amp;apos;img&amp;apos;);             img.style">
 <meta name="keywords" content="Python,JavaScript,.NET,.NET Core,Ziler,架构师,工程师,对象">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Zilor 的码窝">
-<meta property="og:url" content="https:&#x2F;&#x2F;lizer.tech&#x2F;archives&#x2F;2017&#x2F;05&#x2F;index.html">
+<meta property="og:title" content="404">
+<meta property="og:url" content="https:&#x2F;&#x2F;lizer.tech&#x2F;404&#x2F;index.html">
 <meta property="og:site_name" content="Zilor 的码窝">
-<meta property="og:description" content="犹豫，就会败北">
+<meta property="og:description" content="document.querySelectorAll(&amp;apos;.github-emoji&amp;apos;)           .forEach(el =&amp;gt; {             if (!el.dataset.src) { return; }             const img = document.createElement(&amp;apos;img&amp;apos;);             img.style">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-24T11:14:00.165Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lizer.tech/archives/2017/05/">
+<link rel="canonical" href="https://lizer.tech/404/">
 
 
 <script id="page-configurations">
@@ -71,12 +72,13 @@
     sidebar: "",
     isHome: false,
     isPost: false,
-    isPage: false,
-    isArchive: true
+    isPage: true,
+    isArchive: false
   };
 </script>
 
-  <title>归档 | Zilor 的码窝</title>
+  <title>404 | Zilor 的码窝
+  </title>
   
 
 
@@ -185,77 +187,68 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
           <div class="content">
             
 
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">404
+</h1>
+
+<div class="post-meta">
   
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 7 篇日志。 继续努力。</span>
-      </div>
+
+</div>
+
+</header>
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2017</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2017-05-18T12:25:25+08:00"
-              content="2017-05-18">
-          05-18
-        </time>
+      
+      
+      <div class="post-body">
+          <script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
       </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/posts/1805459380/" itemprop="url">
-            <span itemprop="name">一个故事告诉你什么是消息队列</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2017-05-12T14:41:31+08:00"
-              content="2017-05-12">
-          05-12
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/posts/3355505068/" itemprop="url">
-            <span itemprop="name">利用 GitHub Pages 和 Hugo 搭建博客</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
+      
+      
+      
     </div>
+    
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
         </div>
           
@@ -441,6 +434,23 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'd0dd8179a305f5234b4f',
+      clientSecret: '07ded8db0be1796e5aa5b6d863f8dd5a6e239aba',
+      repo: 'buker2012.github.io',
+      owner: 'buker2012',
+      admin: ['buker2012'],
+      id: '4c9b0f983ae256a9d61fcacf2b0f71a3',
+        language: 'zh-CN',
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
 
 </body>
 </html>

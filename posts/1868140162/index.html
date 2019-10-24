@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css?v=7.4.2">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
   <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
@@ -56,8 +56,8 @@
 <meta name="keywords" content="订单采集小程序,项目实战">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ASP.NET Core 3.0 项目实战之订单采集小程序 第三章 架构设计">
-<meta property="og:url" content="https:&#x2F;&#x2F;lizer.tech&#x2F;2019&#x2F;09&#x2F;30&#x2F;ASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1&#x2F;index.html">
-<meta property="og:site_name" content="Lizer 的码窝">
+<meta property="og:url" content="https:&#x2F;&#x2F;lizer.tech&#x2F;posts&#x2F;1868140162&#x2F;index.html">
+<meta property="og:site_name" content="Zilor 的码窝">
 <meta property="og:description" content="或许会有人觉得很奇怪，这么芝麻小点的项目，还需要进行架构设计吗？其实所谓的架构设计，并不是什么高深莫测东西，无论你是否了解，它确实的存在于我们软件开发过程中的各个环节中。哪怕你没有专门去做过架构设计，但你在构想项目时，就已经悄无声息的把它包含了进去。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5BASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%5D-2019-10-23-16-28-29-%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F%20%E5%AE%B9%E5%99%A8%E5%9B%BE.jpg">
@@ -67,11 +67,11 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5BASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%5D-2019-10-23-16-30-44-image-20191020191338848.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5BASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%5D-2019-10-23-16-31-5-image-20191020192454093.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5BASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%5D-2019-10-23-16-31-18-image-20191020193146334.png">
-<meta property="og:updated_time" content="2019-10-23T10:20:48.742Z">
+<meta property="og:updated_time" content="2019-10-24T11:03:07.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;buker2012&#x2F;figurebed&#x2F;master&#x2F;%5BASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%5D-2019-10-23-16-28-29-%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F%20%E5%AE%B9%E5%99%A8%E5%9B%BE.jpg">
 
-<link rel="canonical" href="https://lizer.tech/2019/09/30/ASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">
+<link rel="canonical" href="https://lizer.tech/posts/1868140162/">
 
 
 <script id="page-configurations">
@@ -85,7 +85,7 @@
   };
 </script>
 
-  <title>ASP.NET Core 3.0 项目实战之订单采集小程序 第三章 架构设计 | Lizer 的码窝</title>
+  <title>ASP.NET Core 3.0 项目实战之订单采集小程序 第三章 架构设计 | Zilor 的码窝</title>
   
 
 
@@ -131,11 +131,11 @@
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Lizer 的码窝</span>
+        <span class="site-title">Zilor 的码窝</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-        <p class="site-subtitle">码上有对象</p>
+        <p class="site-subtitle">语言无止境，框架海无涯</p>
   </div>
 
   <div class="site-nav-toggle">
@@ -176,6 +176,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
   </ul>
 
 </nav>
@@ -198,16 +203,16 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lizer.tech/2019/09/30/ASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">
+    <link itemprop="mainEntityOfPage" href="https://lizer.tech/posts/1868140162/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpeg">
-      <meta itemprop="name" content="Lizer">
+      <meta itemprop="name" content="Zil Herig">
       <meta itemprop="description" content="犹豫，就会败北">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lizer 的码窝">
+      <meta itemprop="name" content="Zilor 的码窝">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -236,25 +241,16 @@
             </span>
 
           
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-                <span class="post-meta-item-text">本文字数：</span>
               <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>2 分钟</span>
             </span>
 
@@ -316,7 +312,25 @@
 
 <img src="https://raw.githubusercontent.com/buker2012/figurebed/master/%5BASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%5D-2019-10-23-16-31-18-image-20191020193146334.png" alt="[ASP-NET-Core-3-0-项目实战之订单采集小程序-第三章-架构设计]-2019-10-23-16-31-18-image-20191020193146334.png">
 
-<h3 id="API-接口设计"><a href="#API-接口设计" class="headerlink" title="API 接口设计"></a>API 接口设计</h3>
+<h3 id="API-接口设计"><a href="#API-接口设计" class="headerlink" title="API 接口设计"></a>API 接口设计</h3><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
     </div>
 
     
@@ -324,23 +338,40 @@
     
       
         <div class="reward-container">
-  <div>如果我的文章对你有所帮助，请多多打赏哦！</div>
+  <div>如果我的文章对你有所帮助，可以请我喝杯茶哦！</div>
   <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
       
       <div style="display: inline-block;">
-        <img src="/uploads/wechatpay.jpg" alt="Lizer 微信支付">
+        <img src="/uploads/wechatpay.jpg" alt="Zil Herig 微信支付">
         <p>微信支付</p>
       </div>
       
       <div style="display: inline-block;">
-        <img src="/uploads/alipay.jpg" alt="Lizer 支付宝">
+        <img src="/uploads/alipay.jpg" alt="Zil Herig 支付宝">
         <p>支付宝</p>
       </div>
 
   </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zil Herig
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lizer.tech/posts/1868140162/" title="ASP.NET Core 3.0 项目实战之订单采集小程序 第三章 架构设计">https://lizer.tech/posts/1868140162/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
 
@@ -355,7 +386,7 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/09/29/ASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90/" rel="next" title="ASP.NET Core 3.0 项目实战之订单采集小程序 第二章 需求分析">
+                <a href="/posts/3510016629/" rel="next" title="ASP.NET Core 3.0 项目实战之订单采集小程序 第二章 需求分析">
                   <i class="fa fa-chevron-left"></i> ASP.NET Core 3.0 项目实战之订单采集小程序 第二章 需求分析
                 </a>
             </div>
@@ -363,7 +394,7 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/10/01/ASP-NET-Core-3-0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E4%B9%8B%E8%AE%A2%E5%8D%95%E9%87%87%E9%9B%86%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1/" rel="prev" title="ASP.NET Core 3.0 项目实战之订单采集小程序 第四章 接口设计">
+                <a href="/posts/771724912/" rel="prev" title="ASP.NET Core 3.0 项目实战之订单采集小程序 第四章 接口设计">
                   ASP.NET Core 3.0 项目实战之订单采集小程序 第四章 接口设计 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -411,9 +442,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Lizer"
+  <img class="site-author-image" itemprop="image" alt="Zil Herig"
     src="/uploads/avatar.jpeg">
-  <p class="site-author-name" itemprop="name">Lizer</p>
+  <p class="site-author-name" itemprop="name">Zil Herig</p>
   <div class="site-description" itemprop="description">犹豫，就会败北</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -421,20 +452,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -470,30 +501,25 @@
 
 <div class="copyright">
   
-  &copy; 2013 – 
+  &copy; 2017 – 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-space-shuttle"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Lizer</span>
+  <span class="author" itemprop="copyrightHolder">Zil Herig</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">8k</span>
+    <span title="站点总字数">12k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9 分钟</span>
+    <span title="站点阅读时长">15 分钟</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
-  </div>
 
         
 <div class="busuanzi-count">
@@ -582,7 +608,7 @@
       repo: 'buker2012.github.io',
       owner: 'buker2012',
       admin: ['buker2012'],
-      id: 'af38b73d3354852064f2676e90f54f6a',
+      id: '2ba8db15864493be003e5a18948a6b1b',
         language: 'zh-CN',
       distractionFreeMode: 'true'
     });
